@@ -16,7 +16,12 @@ penPoller('button.primaryButton').then((button)=>{
 You can also poll for multiple elements of different types. Passing an array as requirement, returns an array of elements to use.
 
 ```javascript
-let requiredElements = ['button.primaryButton', 'h3.title', 'window.userData', function(){ return something; }];
+let requiredElements = [
+    'button.primaryButton',
+    'h3.title',
+    'window.userData',
+    function(){ return something; }
+];
 penPoller(requiredElements).then(([button, title, userData, something])=>{
 	//do something with your button, title and userData
 });
@@ -52,7 +57,10 @@ let options = {
   	timeout: 10000,
   	interval: 10
 };
-let requiredElements = ['button', 'window.userData'];
+let requiredElements = [
+    'button',
+    'window.userData'
+];
 penPoller(requiredElements, options).then(([buttons, userData])=>{
     buttons.forEach((button)=>{
         //do something with every button and don't forget your userData
