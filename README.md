@@ -30,10 +30,12 @@ penPoller(requiredElements).then(([button, title, userData, something])=>{
 ## Options
 You can pass several options.
 
-- scope: this determines in which DOM element the poller looks for the required HTML element, if left empty this defaults to `document`. For example, use a previously polled for element like `button`. Only works for HTML elements, not for window.objects and other types.
-- all: this instructs the poller to use querySelectorAll, which returns an array of all elements that fit the selector. By default the poller uses querySelector and so returns only the first element that fits the selector. Note: this only works for HTML elements, not for window.objects and other types.
-- timeout: in miliseconds, this is the maximum time the poller can check whether an element exists before it times out and returns nothing. Standard setting is 5 seconds or 5000 miliseconds.
-- interval: in miliseconds, this is how quickly the poller renews its search for the required elements. Standard setting is every 20 miliseconds.
+| Option  | Default value | Description |
+| ------------- | ------------- |
+| scope  | `document` | this determines in which DOM element the poller looks for the required HTML element. For example, use a previously polled for element like `button`. Only works for HTML elements, not for window.objects and other types. |
+| all  | false  | this instructs the poller to use querySelectorAll, which returns an array of all elements that fit the selector. By default the poller uses querySelector and so returns only the first element that fits the selector. Note: this only works for HTML elements, not for window.objects and other types. |
+| timeout | 5000 ms or 5 seconds | in miliseconds, this is the maximum time the poller can check whether an element exists before it times out and returns nothing. |
+| interval | 20 ms | in miliseconds, this is how quickly the poller renews its search for the required elements |
 
 ```javascript
 let options = {
