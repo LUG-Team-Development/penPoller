@@ -30,17 +30,17 @@ penPoller(requiredElements).then(([button, title, userData, something])=>{
 ## Options
 You can pass several options.
 
-- scope: this determines where the poller looks for the required element, if left empty this defaults to `document`.
-- all: this instructs the poller to use querySelectorAll, which returns an array of all elements that fit the selector. This applies to all requirements that return HTML elements, window.objects only return the one object. By default the poller uses querySelector and so returns only the first element that fits the selector.
-- timeout: in miliseconds, this changes the maximum time the poller can check whether an element exists before it times out and returns nothing. Standard time is 5 seconds or 5000 miliseconds.
+- scope: this determines in which DOM element the poller looks for the required HTML element, if left empty this defaults to `document`. For example, use a previously polled for element like `button`. Only works for HTML elements, not for window.objects and other types.
+- all: this instructs the poller to use querySelectorAll, which returns an array of all elements that fit the selector. By default the poller uses querySelector and so returns only the first element that fits the selector. Note: this only works for HTML elements, not for window.objects and other types.
+- timeout: in miliseconds, this is the maximum time the poller can check whether an element exists before it times out and returns nothing. Standard setting is 5 seconds or 5000 miliseconds.
 - interval: in miliseconds, this is how quickly the poller renews its search for the required elements. Standard setting is every 20 miliseconds.
 
 ```javascript
 let options = {
-  	scope: document.body,
+    scope: document.body,
     all: true,
-  	interval: 10,
-  	timeout: 10000
+    interval: 10,
+    timeout: 10000
 };
 penPoller('button', options).then((buttons)=>{
     buttons.forEach((button)=>{
@@ -52,10 +52,10 @@ or
 
 ```javascript
 let options = {
-  	scope: document.body,
+    scope: document.body,
     all: true,
-  	timeout: 10000,
-  	interval: 10
+    timeout: 10000,
+    interval: 10
 };
 let requiredElements = [
     'button',
