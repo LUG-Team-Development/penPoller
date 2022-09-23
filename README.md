@@ -37,6 +37,7 @@ You can pass several options.
 | timeout | 5000 ms | in miliseconds, this is the maximum time the poller can check whether an element exists before it times out and returns nothing. |
 | interval | 20 ms | in miliseconds, this is how quickly the poller renews its search for the required elements |
 
+Example:
 
 ```javascript
 let options = {
