@@ -13,7 +13,7 @@ window.penPoller = window.penPoller || function(items, options){
         let nextTime = 0;
         let endTime = 0;
   
-        const poller = async time => {
+        const poller = time => {
             if (endTime === 0) endTime = time + timeout;
     
             if (time > nextTime) {
@@ -61,4 +61,4 @@ window.penPoller = window.penPoller || function(items, options){
         };
         requestAnimationFrame(poller);
     });
-}
+};
