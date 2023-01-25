@@ -6,7 +6,7 @@
 window.penPoller = window.penPoller || function(items, options){
     return new Promise((resolve, reject)=>{
         let scope = options && options.scope || document;                           //use document or other el for querySelector scope
-        let all = options && options.all !== undefined ? options.all : false;        //use querySelectorAll
+        let all = options && options.all !== undefined ? options.all : false;       //use querySelectorAll
         let timeout = options && options.timeout || 5000;                           //max time
         let interval = options && options.interval || 20;
         let done = false;
@@ -25,22 +25,32 @@ window.penPoller = window.penPoller || function(items, options){
                     if (typeof e === 'function'){   //if function check if true of filled
                         let tmpval = e();
                         if(tmpval) cbitems.push(tmpval);
-                    } else if (typeof e === 'boolean' || typeof e === 'number' || typeof e === 'object'){   //if bool, number or object, return value
-                        cbitems.push(e);
-                    } else if (typeof e === 'string') {
+                    } else if (typeof e === 'boolean'){ //if boolean check if true
+                        if(e === true) cbitems.push(e);
+                    } else if (typeof e === 'number' || typeof e === 'object'){   //if number or object, check if not undefined
+                        if(e !== undefined) cbitems.push(e);
+                    } else if (typeof e === 'string') { //if string, check if window object or element selector
                         let els = all ? scope.querySelectorAll(e) : scope.querySelector(e);
-                        if (!/^window\./i.test(e) && ((all && els.length) || (!all && els))) cbitems.push(els);     //if not window object and element(s) present, return element(s)
-                        else {
+                        if (!/^window\./i.test(e) && ((all && els.length) || (!all && els))) cbitems.push(els); //if not window object check if element(s) present
+                        else {  //if window object check window object path
                             e = e.replace(/^window\./i, '');
-                            let tmpval,
-                                earr = /[\.\]\[]+/.test(e) ? e.replace(/\'\"\]/g,'').split(/[\.\[]+/g) : [e];       //create array from window object path
-                            earr.forEach((element, index)=>{            //iterate through window object path
+                            let tmpval;
+                            let earr = /[\.\]\[]+/.test(e) ? e.replace(/\'\"\]/g,'').split(/[\.\[]+/g) : [e];   //create array from window object path
+                            
+                            //iterate through window object path
+                            earr.forEach((element, index)=>{
                                 let isFunction = /\)$/i.test(element);
                                 element = isFunction ? element.split('(')[0] : element;
-                                tmpval = (index === 0) ? window[element] : (tmpval !== undefined) ? tmpval[element] : undefined;        //check if next window object is present
-                                if(isFunction && tmpval !== undefined) tmpval = tmpval();               //if window object is function execute
+                                
+                                //check if next object in path is present
+                                tmpval = (index === 0) ? window[element] : (tmpval !== undefined) ? tmpval[element] : undefined;
+                                
+                                //if object is function execute
+                                if(isFunction && tmpval !== undefined) tmpval = tmpval();
                             });
-                            if(tmpval !== undefined) cbitems.push(tmpval);      //if value is "" or 0 you still want it returned
+
+                            //if value is "" or 0 you still want it returned
+                            if(tmpval !== undefined) cbitems.push(tmpval);
                         }
                     }
                 };
@@ -56,7 +66,7 @@ window.penPoller = window.penPoller || function(items, options){
                     done = true;
                     resolve(isArray ? cbitems : cbitems[0]);
                 } else if (time < endTime) requestAnimationFrame(poller);
-                else reject();
+                else return false;
             } else if(!done) requestAnimationFrame(poller);
         };
         requestAnimationFrame(poller);
