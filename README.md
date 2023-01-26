@@ -12,8 +12,9 @@ window.penPoller('button.primaryButton').then((button)=>{
 	//do something with your button
 });
 ```
+### Types of requirements
 
-You can also poll for multiple requirements of different types. Passing an array of requirements, returns an array of objects to use.
+You can also poll for multiple requirements of different types.
 
 | Requirement type  | Format | Passing values | Returns | Notes |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -21,6 +22,10 @@ You can also poll for multiple requirements of different types. Passing an array
 | window.object as string | `'window.someWindowObject.name'` or `'window.someWindowObject["name"]'` | Not undefined or false | the value of the object, in this case the value of `window.someWindowObject.name` | Runs through the whole window path in the string and prevents 'undefined'-errors. Don't use window.objects directly without stringifying, a function or a boolean. |
 | function | `function(){ return someObject; }` | Not undefined or false | The returned value of the function, in this case the value of `someObject` |
 | boolean | `someNumber >= 5` | True | True |
+
+### Multiple requirements
+
+Passing an array of requirements, returns an array of objects to use.
 
 Example:
 
@@ -40,7 +45,7 @@ window.penPoller(requirements).then(([button, name, someBoolean, someObject])=>{
 });
 ```
 
-## Options
+### Options
 You can pass several options that should help if you run into issues.
 
 | Option  | Default value | Description |
