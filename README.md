@@ -4,31 +4,44 @@ The Penultimate Poller, the poller to outpoll all pollers, but one (because ther
 
 ## Usage
 
-Place the minified poller at the top of your script.
+Place the minified poller at the top of your script. Don't make any changes, <u>window.</u>penPoller means your changes can also affect other scripts.
 Here an example of the most basic use. This polls for one element and returns that element once it's been found.
 
 ```javascript
-penPoller('button.primaryButton').then((button)=>{
+window.penPoller('button.primaryButton').then((button)=>{
 	//do something with your button
 });
 ```
 
-You can also poll for multiple elements of different types. Passing an array as requirement, returns an array of elements to use.
+You can also poll for multiple requirements of different types. Passing an array of requirements, returns an array of objects to use.
+
+| Requirement type  | Format | Passing values | Returns | Notes |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| HTML selector  | `'button.primaryButton'` | `querySelector` returns an element or `querySelectorAll` returns at least one element | the element or an array of elements if options.all is set to true |
+| window.object as string | `'window.someWindowObject.name'` or `'window.someWindowObject["name"]'` | Not undefined or false | the value of the object, in this case the value of `window.someWindowObject.name` | Runs through the whole window path in the string and prevents 'undefined'-errors. Don't use window.objects directly without stringifying, a function or a boolean. |
+| function | `function(){ return someObject; }` | Not undefined or false | The returned value of the function, in this case the value of `someObject` |
+| boolean | `someNumber >= 5` | True | True |
+
+Example:
 
 ```javascript
-let requiredElements = [
-    'button.primaryButton',
-    'h3.title',
-    'window.userData',
-    function(){ return something; }
+let someNumber = 5;
+let someObject = { 'name': 'test'}
+window.someWindowObject = someObject;
+
+let requirements = [
+    'button.primaryButton',                 // HTML selector
+    'window.someWindowObject.name',         // window.object as string
+    someNumber === 5,                       // boolean
+    function(){ return someObject; }        // function
 ];
-penPoller(requiredElements).then(([button, title, userData, something])=>{
-	//do something with your button, title and userData
+window.penPoller(requirements).then(([button, name, someBoolean, someObject])=>{
+	//do something with your returned values
 });
 ```
 
 ## Options
-You can pass several options.
+You can pass several options that should help if you run into issues.
 
 | Option  | Default value | Description |
 | ------------- | ------------- | ------------- |
@@ -43,10 +56,10 @@ Example:
 let options = {
     scope: someElement,
     all: true,
-    interval: 10,
-    timeout: 10000
+    timeout: 10000,
+    interval: 10
 };
-penPoller('button', options).then((buttons)=>{
+window.penPoller('button.primaryButton', options).then((buttons)=>{
     buttons.forEach((button)=>{
         //do something with every button
     });
@@ -61,13 +74,14 @@ let options = {
     timeout: 10000,
     interval: 10
 };
-let requiredElements = [
-    'button',
-    'window.userData'
+let someNumber = 5;
+let requirements = [
+    'button.primaryButton',
+    someNumber === 5
 ];
-penPoller(requiredElements, options).then(([buttons, userData])=>{
+window.penPoller(requirements, options).then(([buttons, someBoolean])=>{
     buttons.forEach((button)=>{
-        //do something with every button and don't forget your userData
+        //do something with every button
     });
 });
 ```
