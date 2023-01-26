@@ -4,7 +4,7 @@ The Penultimate Poller, the poller to outpoll all pollers, but one (because ther
 
 ## Usage
 
-Place the minified poller at the top of your script. Don't make any changes, <u>window.</u>penPoller means your changes can also affect other scripts.
+Place the minified poller at the top of your script. Don't make any changes, **window**.penPoller means your changes can also affect other scripts.
 
 Below an example of the most basic use. This polls for one HTML element and returns that element once it's been found.
 
