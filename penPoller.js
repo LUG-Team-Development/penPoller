@@ -21,8 +21,8 @@
         
                 let cbItems = [];
 
-				let checkWinObject = (e) => {
-					e = e.replace(/^window[\.\[]{1}/i, '');
+				        let checkWinObject = (e) => {
+					          e = e.replace(/^window[\.\[]{1}/i, '');
                     let tmpval;
                     let earr = /[\.\]\[]+/.test(e) ? e.replace(/[\'\"\]]{1}/g,'').split(/[\.\[]{1}/g) : [e];       //create array from window object path
                     
@@ -48,7 +48,7 @@
 
                     //if value is "" or 0 you still want it returned
                     if(tmpval !== undefined) cbItems.push(tmpval);
-				}
+				        }
                 let checkitem = (e, i) => {
                     if (typeof e === 'function'){   //if function check if true of filled
                         let tmpval = e();
