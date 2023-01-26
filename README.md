@@ -5,6 +5,7 @@ The Penultimate Poller, the poller to outpoll all pollers, but one (because ther
 ## Usage
 
 Place the minified poller at the top of your script. Don't make any changes, <u>window.</u>penPoller means your changes can also affect other scripts.
+
 Below an example of the most basic use. This polls for one HTML element and returns that element once it's been found.
 
 ```javascript
@@ -14,7 +15,7 @@ window.penPoller('button.primaryButton').then((button)=>{
 ```
 ### Types of requirements
 
-You can also poll for multiple requirements of different types.
+You can also poll for requirements of different types.
 
 | Requirement type  | Format | Passing values | Returns | Notes |
 | ------------- | ------------- | ------------- | ------------- | ------------- |
@@ -31,7 +32,7 @@ Example:
 
 ```javascript
 let someNumber = 5;
-let someObject = { 'name': 'test'}
+let someObject = { 'name': 'test'};
 window.someWindowObject = someObject;
 
 let requirements = [
@@ -51,8 +52,8 @@ You can pass several options that should help if you run into issues.
 | Option  | Default value | Description |
 | ------------- | ------------- | ------------- |
 | scope  | `document` | this determines in which DOM element the poller looks for the required HTML element. For example, use a previously polled for element like `button`. Note: this only works for HTML elements, not for window.objects and other types. The poller does not poll for the scope, so make sure you poll for the element before you try to use it as scope in another poller. |
-| all  | false  | this instructs the poller to use querySelectorAll, which returns an array of all elements that fit the selector. By default the poller uses querySelector and so returns only the first element that fits the selector. Note: this only works for HTML elements, not for window.objects and other types. |
-| timeout | 5000 ms | in miliseconds, this is the maximum time the poller can check whether an element exists before it times out and returns nothing. |
+| all  | false  | this instructs the poller to use querySelectorAll, which returns an array of all HTML elements that fit the selector. By default the poller uses querySelector and so returns only the first element that fits the selector. Note: this only works for HTML elements, not for window.objects and other types. When activated it does so for all selectors in a requirements array. |
+| timeout | 5000 ms | in miliseconds, this is the maximum time the poller can check whether requirements are met before it times out and returns nothing. |
 | interval | 20 ms | in miliseconds, this is how quickly the poller renews its check of the requirements |
 
 Example:
